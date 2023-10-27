@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  ping:
+    image: ${DOCKER_REGISTRY-}ping
+    container_name: ping
+    build:
+      context: .
+      dockerfile: Ping\Dockerfile
+
+  pong:
+    image: ${DOCKER_REGISTRY-}pong
+    container_name: pong
+    build:
+      context: .
+      dockerfile: Pong\Dockerfile
+
+  rabbit-mq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    volumes: 
+      - ./.containers/queue/data/:/var/lib/rabbitmq
+      - ./.containers/queue/log/:/var/lgb/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - 15672:15672
+      - 5672:5672
