@@ -2,7 +2,6 @@ using Application.Extensions;
 using Application.Models;
 using Application.RabbitMQ;
 using Application.RabbitMQ.Consumers;
-using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -22,11 +21,5 @@ channel.BasicConsume(
     exclusive: false,
     arguments: null,
     consumer: pingPongConsumer);
-
-channel.ExchangeDeclare("events", ExchangeType.Direct, true);
-channel.CreateQueue("notification", "events");
-channel.CreateQueue("gameManager", "events");
-
-channel.BasicConsume("gameManager", true, new GameFinishedConsumer());
 
 app.Run();
