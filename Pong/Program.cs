@@ -1,5 +1,6 @@
 using Application.Extensions;
 using Application.RabbitMQ;
+using Application.RabbitMQ.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
